@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Genesis Festival</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400&display=swap" />
+
+    <style>
+      :root {
+        --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu,
+          "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei UI",
+          "Microsoft Yahei", "Source Han Sans CN", sans-serif;
+
+        /* This is the original mask asset used as a background image in .mask-group */
+        --logo-mask-image: url("https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-12-12/kjvmzYifDa.png");
+
+        /* Requested background video */
+        --logo-video-src: "https://res.cloudinary.com/djobmtpz2/video/upload/v1765371245/genesvid_qeliso.mp4";
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        font-family: var(--default-font-family);
+        background: #FBFAEF; /* no gradient */
+        overflow-x: hidden;
+      }
+
+      html {
+        background: #FBFAEF; /* no gradient */
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--default-font-family);
+        background: none;
+        overflow-x: hidden;
+      }
+
+      .main-container {
+        position: relative;
+        width: 100%;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(56px, 8vw, 120px);
+        padding-bottom: 220px; /* space for chat-input */
+        overflow: hidden;
+      }
+
+      /* Logo mask with video background */
+      .logo-mask {
+        position: absolute;
+        left: 50%;
+        top: clamp(90px, 14vw, 180px); /* slightly higher */
+        transform: translateX(-50%);
+        width: min(1100px, 92vw); /* smaller logo mask */ /* smaller logo mask */ /* slightly smaller */
+        aspect-ratio: 1786.536 / 1308;
+        pointer-events: none;
+        z-index: 0;
+
+        /* Mask the video using the provided PNG */
+        -webkit-mask-image: var(--logo-mask-image);
+        mask-image: var(--logo-mask-image);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+
+        filter: drop-shadow(0 12px 40px rgba(0, 0, 0, 0.06));
+        opacity: 0.95;
+      }
+
+      .logo-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .header {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: clamp(12px, 2vw, 20px);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 50;
+      }
+
+      .header::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 320px; /* header gradient layer */
+        background: linear-gradient(
+          180deg,
+          rgba(96, 192, 180, 0.9) 0%,
+          rgba(96, 192, 180, 0.55) 35%,
+          rgba(96, 192, 180, 0.15) 65%,
+          rgba(96, 192, 180, 0) 100%
+        );
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .bubble,
+      .bubble-1 {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 4px 12px;
+        border-radius: 16px;
+        backdrop-filter: blur(8px);
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .bubble {
+        background: rgba(0, 0, 0, 0.75);
+      }
+
+      .bubble-1 {
+        background: #f3d895;
+      }
+
+      .message-date,
+      .message-location {
+        margin: 0;
+        font-family: "Geist Mono", var(--default-font-family);
+        font-weight: 500;
+        font-size: clamp(14px, 2vw, 20px);
+        line-height: 1.1;
+        letter-spacing: -0.6px;
+        text-transform: uppercase;
+      }
+
+      .message-date {
+        color: #86f7db;
+      }
+
+      .message-location {
+        color: #121212;
+      }
+
+      .vector {
+        position: absolute;
+        width: 88px;
+        height: 64px;
+        top: clamp(12px, 2vw, 20px);
+        left: 50%;
+        transform: translateX(-50%);
+        background: url("https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-12-12/03KEWkRsn5.png")
+          no-repeat center;
+        background-size: cover;
+        z-index: 3;
+      }
+
+      .event-info {
+        width: min(1038px, calc(100% - 32px));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(14px, 2.5vw, 24px);
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        margin-top: 220px; /* move hero text up by 20px */ /* push hero text further down */ /* push hero text down */
+        text-align: center;
+      }
+
+      .message-date-2 {
+        font-family: "Geist", var(--default-font-family);
+        font-weight: 500;
+        font-size: clamp(18px, 3vw, 32px);
+        letter-spacing: -0.04em;
+        text-transform: uppercase;
+        color: #121212;
+      }
+
+      .event-details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        line-height: 0.9;
+      }
+
+      .event-title,
+      .event-subtitle {
+        font-family: "Instrument Serif", var(--default-font-family);
+        font-weight: 400;
+        font-size: clamp(56px, 8.6vw, 110px);
+        letter-spacing: -0.03em;
+        color: #121212;
+        margin: 0;
+      }
+
+      .event-description {
+        width: min(600px, 100%);
+        font-family: "Geist", var(--default-font-family);
+        font-weight: 500;
+        font-size: clamp(16px, 2.1vw, 22px);
+        line-height: 1.4;
+        letter-spacing: -0.03em;
+        color: #121212;
+        margin: 0;
+      }
+
+      .chat-input {
+        position: fixed;
+        left: 50%;
+        bottom: 20px;
+        transform: translateX(-50%);
+        width: min(594px, calc(100% - 24px));
+
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px;
+
+        background: rgba(255, 255, 255, 0.75);
+        border: 0.5px solid rgba(0, 0, 0, 0.1);
+        border-radius: 24px;
+        backdrop-filter: blur(32px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+        z-index: 999;
+      }
+
+      /* Sections (match hero tone) */
+      .section {
+        width: min(1038px, calc(100% - 32px));
+        position: relative;
+        z-index: 2;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .section + .section {
+        margin-top: clamp(44px, 7vw, 88px);
+      }
+
+      /* extra spacing after hero before first section */
+      .section-first {
+        margin-top: clamp(720px, 26vw, 860px); /* bigger gap after hero */
+      }
+
+      .section-eyebrow {
+        margin: 0 0 10px 0;
+        font-family: "Geist Mono", var(--default-font-family);
+        font-weight: 500;
+        font-size: clamp(12px, 1.6vw, 14px);
+        line-height: 1.2;
+        letter-spacing: -0.04em;
+        text-transform: uppercase;
+        color: rgba(18, 18, 18, 0.75);
+      }
+
+      .section-title {
+        margin: 0;
+        font-family: "Instrument Serif", var(--default-font-family);
+        font-weight: 400;
+        font-size: clamp(40px, 6.4vw, 74px);
+        letter-spacing: -0.03em;
+        color: #121212;
+      }
+
+      .section-text {
+        margin: 18px auto 0 auto;
+        width: min(760px, 100%);
+        font-family: "Geist", var(--default-font-family);
+        font-weight: 500;
+        font-size: clamp(16px, 2.1vw, 22px);
+        line-height: 1.5;
+        letter-spacing: -0.03em;
+        color: #121212;
+      }
+
+      .section-note {
+        margin: 18px 0 0 0;
+        font-family: "Geist", var(--default-font-family);
+        font-weight: 500;
+        font-size: clamp(14px, 1.9vw, 18px);
+        letter-spacing: -0.03em;
+        color: rgba(18, 18, 18, 0.7);
+      }
+
+      .attend-grid.new-style {
+        margin-top: 28px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .attend-tile {
+        padding: 28px 24px;
+        border-radius: 28px;
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.08);
+        font-family: "Geist", var(--default-font-family);
+        font-size: clamp(18px, 2.4vw, 24px);
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        color: #121212;
+        text-align: left;
+      }
+
+      .attend-card {
+        position: relative;
+        border-radius: 22px;
+        padding: 16px 16px;
+        background: rgba(255, 255, 255, 0.58);
+        border: 0.5px solid rgba(0, 0, 0, 0.12);
+        backdrop-filter: blur(18px);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+        overflow: hidden;
+        text-align: left;
+      }
+
+      .attend-card::before {
+        content: "";
+        position: absolute;
+        inset: -40px;
+        opacity: 0.35;
+        filter: blur(18px);
+        transform: translateZ(0);
+        pointer-events: none;
+      }
+
+      .attend-card.a1::before { background: radial-gradient(circle at 20% 20%, rgba(96, 192, 180, 0.65), rgba(251, 250, 239, 0)); }
+      .attend-card.a2::before { background: radial-gradient(circle at 20% 20%, rgba(243, 216, 149, 0.85), rgba(251, 250, 239, 0)); }
+      .attend-card.a3::before { background: radial-gradient(circle at 20% 20%, rgba(134, 247, 219, 0.7), rgba(251, 250, 239, 0)); }
+      .attend-card.a4::before { background: radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.18), rgba(251, 250, 239, 0)); }
+      .attend-card.a5::before { background: radial-gradient(circle at 20% 20%, rgba(96, 192, 180, 0.55), rgba(251, 250, 239, 0)); }
+      .attend-card.a6::before { background: radial-gradient(circle at 20% 20%, rgba(243, 216, 149, 0.7), rgba(251, 250, 239, 0)); }
+
+      .attend-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.06);
+        color: rgba(18, 18, 18, 0.9);
+        flex: 0 0 42px;
+      }
+
+      .attend-icon svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      .attend-label {
+        font-family: "Geist", var(--default-font-family);
+        font-weight: 500;
+        font-size: clamp(14px, 2vw, 20px);
+        letter-spacing: -0.03em;
+        color: #121212;
+      }
+
+      .producer {
+        margin-top: 22px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .producer-logo {
+        height: clamp(22px, 3.4vw, 32px);
+        width: auto;
+        opacity: 0.95;
+      }
+
+      .expect-grid.new-style {
+        margin-top: 36px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .expect-tile {
+        padding: 32px 28px;
+        border-radius: 32px;
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .expect-num {
+        font-family: "Geist Mono", var(--default-font-family);
+        font-size: 14px;
+        color: rgba(0,0,0,0.4);
+      }
+
+      .expect-text {
+        font-family: "Geist", var(--default-font-family);
+        font-size: clamp(20px, 2.8vw, 28px);
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        color: #121212;
+      }
+
+      .expect-big {
+        margin: 34px auto 0 auto;
+        width: min(1120px, 100%);
+        gap: 18px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .expect-card {
+        border-radius: 28px;
+        padding: 22px 22px;
+        background: rgba(255, 255, 255, 0.62);
+        border: 0.5px solid rgba(0, 0, 0, 0.12);
+        backdrop-filter: blur(18px);
+        position: relative;
+        overflow: hidden;
+        min-height: 168px;
+        text-align: left;
+      }
+
+      .expect-card::before {
+        content: "";
+        position: absolute;
+        inset: -60px;
+        opacity: 0.26;
+        filter: blur(22px);
+        pointer-events: none;
+      }
+
+      .expect-card.e1::before { background: radial-gradient(circle at 18% 20%, rgba(134, 247, 219, 0.75), rgba(251, 250, 239, 0)); }
+      .expect-card.e2::before { background: radial-gradient(circle at 18% 20%, rgba(243, 216, 149, 0.85), rgba(251, 250, 239, 0)); }
+      .expect-card.e3::before { background: radial-gradient(circle at 18% 20%, rgba(96, 192, 180, 0.75), rgba(251, 250, 239, 0)); }
+
+      .expect-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .expect-badge {
+        font-family: "Geist Mono", var(--default-font-family);
+        font-weight: 500;
+        font-size: 14px;
+        letter-spacing: -0.04em;
+        color: rgba(18, 18, 18, 0.6);
+        text-transform: uppercase;
+      }
+
+      .expect-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.06);
+        color: rgba(18, 18, 18, 0.9);
+        flex: 0 0 48px;
+      }
+
+      .expect-icon svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .expect-title {
+        font-family: "Geist", var(--default-font-family);
+        font-weight: 600;
+        font-size: clamp(18px, 2.2vw, 26px);
+        letter-spacing: -0.03em;
+        color: #121212;
+        line-height: 1.15;
+      }
+
+      .expect-sub {
+        margin-top: 10px;
+        font-family: "Geist", var(--default-font-family);
+        font-weight: 500;
+        font-size: clamp(14px, 1.8vw, 18px);
+        letter-spacing: -0.03em;
+        color: rgba(18, 18, 18, 0.7);
+        line-height: 1.4;
+      }
+
+      .image-card.photo {
+        padding: 0;
+        align-items: stretch;
+        justify-content: stretch;
+        aspect-ratio: 16 / 10;
+      }
+
+      .image-card.photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .image-card.photo figcaption {
+        position: absolute;
+        left: 16px;
+        bottom: 14px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.72);
+        border: 0.5px solid rgba(0, 0, 0, 0.12);
+        backdrop-filter: blur(18px);
+        font-family: "Geist Mono", var(--default-font-family);
+        font-weight: 500;
+        font-size: 12px;
+        letter-spacing: -0.04em;
+        text-transform: uppercase;
+        color: rgba(18, 18, 18, 0.72);
+      }
+
+      .cta-card {
+        margin-top: 26px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .cta-image {
+        width: min(520px, 92vw);
+        height: auto;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+      }
+      }
+
+      .expect-item span {
+        display: block;
+        font-family: "Geist Mono", var(--default-font-family);
+        font-weight: 500;
+        font-size: 14px;
+        letter-spacing: -0.04em;
+        color: rgba(18, 18, 18, 0.7);
+        margin-bottom: 10px;
+        text-transform: uppercase;
+      }
+
+      .expect-item p {
+        margin: 0;
+        font-family: "Geist", var(--default-font-family);
+        font-weight: 500;
+        font-size: clamp(14px, 2vw, 20px);
+        line-height: 1.3;
+        letter-spacing: -0.03em;
+        color: #121212;
+      }
+
+      .image-grid {
+        margin: 26px auto 0 auto;
+        width: min(980px, 100%);
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .image-card {
+        border-radius: 24px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.55);
+        border: 0.5px solid rgba(0, 0, 0, 0.12);
+        backdrop-filter: blur(18px);
+        aspect-ratio: 16 / 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+      }
+
+      .image-card span {
+        font-family: "Geist Mono", var(--default-font-family);
+        font-weight: 500;
+        font-size: 14px;
+        letter-spacing: -0.04em;
+        color: rgba(18, 18, 18, 0.55);
+        text-transform: uppercase;
+      }
+
+      .cta {
+        margin-top: clamp(44px, 7vw, 88px);
+      }
+
+      .cta-button {
+        margin-top: 22px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 18px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.78);
+        border: 0.5px solid rgba(0, 0, 0, 0.1);
+        color: #ffffff;
+        font-family: "Geist", var(--default-font-family);
+        font-weight: 500;
+        font-size: 16px;
+        letter-spacing: -0.03em;
+        cursor: pointer;
+      }
+
+      .footer {
+        width: 100%;
+        margin-top: clamp(56px, 9vw, 120px);
+        padding: 22px 0;
+        text-align: center;
+        font-family: "Geist Mono", var(--default-font-family);
+        font-weight: 500;
+        font-size: 12px;
+        letter-spacing: -0.04em;
+        text-transform: uppercase;
+        color: rgba(18, 18, 18, 0.55);
+        position: relative;
+        z-index: 2;
+      }
+
+      @media (max-width: 860px) {
+        .expect-grid {
+          grid-template-columns: 1fr;
+        }
+        .expect-big {
+          grid-template-columns: 1fr;
+        }
+        .attend-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .image-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .attend-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+        .expect-big {
+          grid-template-columns: 1fr;
+        }
+        .attend-grid {
+          grid-template-columns: 1fr;
+        }
+        .image-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+        .attend-grid {
+          grid-template-columns: 1fr;
+        }
+        .image-grid {
+          grid-template-columns: 1fr;
+        }
+        .expect-item {
+          text-align: left;
+        }
+      }
+        .image-grid {
+          grid-template-columns: 1fr;
+        }
+        .expect-item {
+          text-align: center;
+        }
+      }
+
+      .bubble-3 {
+        width: 100%;
+        background: #ffffff;
+        border-radius: 24px 24px 24px 0;
+        padding: 10px 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+
+      .message {
+        margin: 0;
+        font-family: "Geist", var(--default-font-family);
+        font-size: 16px;
+        line-height: 1.3;
+        letter-spacing: -0.03em;
+        color: #000;
+      }
+
+      .text {
+        padding: 4px 8px;
+        border-radius: 12px;
+      }
+
+      .text-4 {
+        margin: 0;
+        font-family: "Geist Mono", var(--default-font-family);
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: -0.04em;
+        color: rgba(0, 0, 0, 0.4);
+      }
+
+      .chatgpt-chat-input-assets {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        background: transparent;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .btn:active {
+        transform: translateY(1px);
+      }
+
+      .btn-text {
+        font-family: "Geist", var(--default-font-family);
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: -0.02em;
+        color: #000;
+        white-space: nowrap;
+      }
+
+      .btn-icon {
+        width: 16px;
+        height: 16px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        flex: 0 0 16px;
+      }
+
+      .i-paperclip {
+        background-image: url("https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-12-12/YhEGXj8qfT.png");
+      }
+      .i-book {
+        background-image: url("https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-12-12/AqAAm6qz8P.png");
+      }
+      .i-globe {
+        background-image: url("https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-12-12/sBKy05dW88.png");
+      }
+
+      /* Mobile tuning */
+      @media (max-width: 520px) {
+        .vector {
+          width: 64px;
+          height: 46px;
+        }
+        .bubble,
+        .bubble-1 {
+          border-radius: 14px;
+        }
+        .main-container {
+          padding-bottom: 260px;
+          padding-top: 88px;
+        }
+        .logo-mask {
+          width: 170vw;
+          opacity: var(--logo-opacity);
+        }
+      }
+        .bubble,
+        .bubble-1 {
+          border-radius: 14px;
+        }
+        .main-container {
+          padding-bottom: 260px;
+        }
+        .logo-mask {
+          width: 170vw;
+          top: 170px;
+          opacity: 0.9;
+        }
+      }
+
+      /* Respect reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        .logo-video {
+          display: none;
+        }
+        .logo-mask {
+          background: #000;
+          -webkit-mask-image: var(--logo-mask-image);
+          mask-image: var(--logo-mask-image);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="main-container">
+      <!-- Video masked by the logo shape -->
+      <div class="logo-mask" aria-hidden="true">
+        <video
+          class="logo-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          src="https://res.cloudinary.com/djobmtpz2/video/upload/v1765371245/genesvid_qeliso.mp4"
+        ></video>
+      </div>
+
+      <div class="header">
+        <div class="bubble"><span class="message-date">23/24 March 2026</span></div>
+        <div class="vector"></div>
+        <div class="bubble-1"><span class="message-location">Hong Kong</span></div>
+      </div>
+
+      <div class="event-info">
+        <div class="message-date-2">23/24 March 2026</div>
+        <div class="event-details">
+          <div class="event-title">Where Legacy</div>
+          <div class="event-subtitle">Meets Tomorrow</div>
+        </div>
+        <p class="event-description">
+          A two-day open-air gathering for 500 leaders across family offices, private banking, UHNW, asset
+          management, NextGen, and frontier tech.
+        </p>
+      </div>
+      <!-- Sections (below hero) -->
+      <section class="section section-first" aria-label="Why Genesis">
+        <p class="section-eyebrow">Why Genesis</p>
+        <h2 class="section-title">The market is shifting</h2>
+        <p class="section-text">
+          AI is transforming advisory. Private credit is redefining yield. Digital assets are becoming regulated.
+          Generational leadership is shifting.
+        </p>
+        <p class="section-text">
+          Genesis brings the people driving these changes together — outdoors, in a modern setting designed for real
+          dialogue and high-value dealflow.
+        </p>
+        <div class="image-grid" style="margin-top:32px;">
+          <figure class="image-card photo">
+            <img
+              src="https://res.cloudinary.com/djobmtpz2/image/upload/v1765380843/image_903_dtsza5.jpg"
+              alt="The Terrace"
+              loading="lazy"
+            />
+            
+        </div>
+      </section>
+
+      <section class="section" aria-label="Who Attends">
+        <p class="section-eyebrow">Who Attends</p>
+        <h2 class="section-title">A curated community</h2>
+
+        <div class="attend-grid new-style">
+          <div class="attend-tile">Family Offices</div>
+          <div class="attend-tile">UHNW Investors</div>
+          <div class="attend-tile">Private Banking</div>
+          <div class="attend-tile">Asset Managers</div>
+          <div class="attend-tile">NextGen</div>
+          <div class="attend-tile">Tech Founders</div>
+        </div>
+
+        <p class="section-note">A curated community — not a crowd.</p>
+      </section>
+
+      <section class="section" aria-label="What to Expect">
+        <p class="section-eyebrow">What to Expect</p>
+        <h2 class="section-title">Built for outcomes</h2>
+
+        <div class="expect-grid new-style">
+          <div class="expect-tile">
+            <span class="expect-num">01</span>
+            <span class="expect-text">AI-powered 1:1 meetings</span>
+          </div>
+          <div class="expect-tile">
+            <span class="expect-num">02</span>
+            <span class="expect-text">Focused roundtables</span>
+          </div>
+          <div class="expect-tile">
+            <span class="expect-num">03</span>
+            <span class="expect-text">Meaningful dealflow</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Produced by">
+        <p class="section-eyebrow">Produced by</p>
+        <div class="producer">
+          <img
+            class="producer-logo"
+            src="https://res.cloudinary.com/djobmtpz2/image/upload/v1765756515/finoverse-full_xlezlj.svg"
+            alt="Finoverse"
+            loading="lazy"
+          />
+        </div>
+      </section>
+
+      <section class="section" aria-label="Venue and Experience">
+        <p class="section-eyebrow">Venue & Experience</p>
+        <h2 class="section-title">Fresh air over ballrooms</h2>
+        <p class="section-text">
+          Set on the harbour at the Royal Hong Kong Yacht Club, Genesis replaces ballrooms with fresh air, open
+          terraces, and natural conversation — a setting where serious people connect more easily and outcomes happen
+          organically.
+        </p>
+        <div class="image-grid">
+          <figure class="image-card photo">
+            <img
+              src="https://res.cloudinary.com/djobmtpz2/image/upload/v1765548347/image_865_nlvdai.jpg"
+              alt="Victoria Harbour"
+              loading="lazy"
+            />
+            <figcaption>Victoria Harbour</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section cta" aria-label="Ready to Join">
+        <p class="section-eyebrow">Ready to Join?</p>
+        <h2 class="section-title">Request an Invitation</h2>
+
+        <div class="cta-card">
+          <img
+            class="cta-image"
+            src="https://res.cloudinary.com/djobmtpz2/image/upload/v1765953707/%D0%BA%D0%B0%D1%80%D0%B4_ykn6ok.png"
+            alt="Invitation card"
+            loading="lazy"
+          />
+          <button class="cta-button" type="button">Request an Invitation</button>
+        </div>
+      </section>
+
+      <footer class="footer">© 2025 Genesis Festival</footer>
+    </div>
+
+    <!-- Samantha chat bar (overlay, above all sections) -->
+    <div class="chat-input" aria-label="Samantha chat">
+      <div class="bubble-3">
+        <p class="message">
+          I'm Samantha, your AI host for Genesis Festival.<br />
+          To begin your invitation request, may I know your role?
+        </p>
+      </div>
+
+      <div class="text"><p class="text-4">Pick one to start</p></div>
+
+      <div class="chatgpt-chat-input-assets">
+        <div class="group">
+          <button class="btn" type="button"><span class="btn-icon i-paperclip"></span><span class="btn-text">Private Banking</span></button>
+          <button class="btn" type="button"><span class="btn-icon i-book"></span><span class="btn-text">Nextgen</span></button>
+          <button class="btn" type="button"><span class="btn-icon i-globe"></span><span class="btn-text">Tech Founder</span></button>
+          <button class="btn" type="button"><span class="btn-icon i-book"></span><span class="btn-text">Nextgen</span></button>
+          <button class="btn" type="button"><span class="btn-icon i-book"></span><span class="btn-text">Other</span></button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Fallback: some browsers may block autoplay until it's muted (already muted) and attempted play.
+      const v = document.querySelector('.logo-video');
+      if (v) {
+        v.play().catch(() => {
+          // user gesture required
+        });
+      }
+
+      
+    </script>
+  </body>
+</html>
